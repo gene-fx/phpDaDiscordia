@@ -1,0 +1,117 @@
+body{
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    background-color: black;
+    color: white;
+    font-family: 'Sono', sans-serif;;
+}
+
+a{
+    text-decoration: none;
+    color: inherit;
+}
+
+main{
+    width: 70%;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+table{
+    border-collapse: collapse;
+    padding: 0;
+    margin: 0;
+    margin-top: 30px;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: rgb(29, 29, 29);
+}
+
+tbody tr:nth-child(even) {
+    background-color: rgb(94, 93, 93);
+}
+
+article{
+    margin-bottom: 10px;
+}
+
+input{
+    padding: 5px;
+}
+
+.nav-bar{
+    display: flex;
+    width: 100%;
+    height: 75px;
+    background-color: rgb(59, 59, 59);
+    margin: 0;
+    padding: 0;
+}
+
+.nav-bar > *{
+    margin-top: auto;
+    margin-bottom: auto;
+    flex: 1;
+    text-decoration: none;
+    list-style-type: none;
+    color: white;
+}
+
+.nav-title{
+    position: static;
+    padding: 10px;
+    color: rgb(157, 255, 0);
+    font-weight: bold;
+    font-size: larger;
+}
+
+.main-content{
+    margin-top: 30px;
+    text-align: center;
+    display: grid;
+    flex-direction: row;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    border: 3px solid black;
+    gap: 3px;
+}
+
+.form-content{
+    display: grid;
+    grid-template: column;
+}
+
+.green-btn{
+    background-color: green;
+    color: white;
+    width: 130px;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.red-btn{
+    background-color: red;
+    color: white;
+    width: 130px;
+    padding: 10px;
+}
+
+.delete-table-btn{
+    color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: red;
+    padding: 1px;
+}
+
+.edit-table-btn{
+    color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: green;
+    padding: 1px;
+}
