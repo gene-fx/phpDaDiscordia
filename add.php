@@ -1,5 +1,5 @@
 <?php
-if (isset($_POST['pass'])) {
+if (isset($_POST['pass']) && $_POST['pass'] != '') {
     $conn = new mysqli(HOST, USER, PASS, BASE);
 
     if ($conn->connect_errno) {
@@ -11,7 +11,7 @@ if (isset($_POST['pass'])) {
         $first_name = filter_input(INPUT_POST, 'first_name', FILTER_UNSAFE_RAW);
         $last_name = filter_input(INPUT_POST, 'last_name', FILTER_UNSAFE_RAW);
         $email = filter_input(INPUT_POST, 'email', FILTER_UNSAFE_RAW);
-        $pass = md5(filter_input(INPUT_POST, 'pass', FILTER_UNSAFE_RAW));
+        $pass = password_hash(filter_input(INPUT_POST, 'pass', FILTER_UNSAFE_RAW), PASSWORD_DEFAULT);
         $reg_date = date('y-m-d');
 
         $sqlAdd = "INSERT INTO user (first_name, last_name, email, pass, reg_date) 
@@ -20,12 +20,14 @@ if (isset($_POST['pass'])) {
         $res = $conn->query($sqlAdd);
 
         if ($res == true) {
-            $addedId = $conn->query('SELECT * FROM user WHERE email=' . '"' . $email . '"');
-            $addedId = $addedId->fetch_all();
-            $addedId = $addedId[0];
-            $addedId = $addedId[0];
-
-            echo '<script> window.location.replace("' . $_SERVER['PHP_SELF'] . '?page=details&id=' . $addedId . ' ") </script>';
+            $login = $conn->query('SELECT * FROM user WHERE email=' . '"' . $email . '"');
+            $login = $login->fetch_assoc();
+            $_SESSION['username'] = $login['first_name'];
+            $_SESSION['lastname'] = $login['last_name'];
+            $_SESSION['email'] = $login['email'];
+            $_SESSION['id'] = $login['id'];
+            echo '<script>console.log("veio aqui ->"'. $_POST['pass'] .')</script>';
+            echo '<script> window.location.replace("' . $_SERVER['PHP_SELF'] . '?page=details&id=' . $_SESSION['id'] . ' ") </script>';
         }
     }
 }
@@ -78,8 +80,8 @@ if (isset($_POST['pass'])) {
             </article>
             <article>
                 <div>
-                    <button type="submit">Adicionar</button>
-                    <button type="reset">Limpar</button>
+                    <button class="green-btn" type="submit">Adicionar</button>
+                    <button class="red-btn" type="reset">Limpar</button>
                 </div>
             </article>
         </form>

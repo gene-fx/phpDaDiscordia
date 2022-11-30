@@ -1,4 +1,9 @@
 <?php
+if(!isset($_SESSION['username'])){
+    echo '<h3>É preciso estar logado para acessar essa página!</h3>';
+    die();
+}
+
 $conn = new mysqli(HOST, USER, PASS, BASE);
 
 if ($conn->connect_errno) {
@@ -25,7 +30,6 @@ if ($conn->connect_errno) {
         $update = $conn->query($sqlUpdateQuery);
 
         if($update == true){
-            echo 'fez o update so nao ta trocando de pagina';
             echo '<script> window.location.replace("' . $_SERVER['PHP_SELF'] . '?page=details&id=' . $id . ' ") </script>';
         }
     }
@@ -79,7 +83,7 @@ if (empty($_REQUEST['id'])) {
     <main>
         <h1>EDIT</h1>
         <div class="form-content">
-            <form id="form-edit" type="POST" action="<?php echo $_SERVER['PHP_SELF'] ?>">
+            <form id="form-edit" type="POST">
                 <input hidden name="page" value="edit" />
                 <input hidden name="editing" value="true"/>
                 <input hidden name="id" value="<?php echo $user[0] ?>" />
@@ -117,10 +121,12 @@ if (empty($_REQUEST['id'])) {
                 </article>
                 <article>
                     <div>
-                        <button class="green-btn">Salvar</button>
+                        <button formaction="<?php echo $_SERVER['PHP_SELF'] ?>" 
+                        class="green-btn">Salvar</button>
                     </div>
                     <div>
-                        <button type="reset" class="red-btn" id="reset-btn">Limpar</button>
+                        <button formaction="<?php echo $_SERVER['PHP_SELF'] . '?page=delete&id=' . $user[0]?>" 
+                        class="red-btn" id="reset-btn">Excluir</button>
                     </div>
                 </article>
             </form>

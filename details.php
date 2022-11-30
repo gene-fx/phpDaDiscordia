@@ -1,4 +1,9 @@
 <?php
+if(!isset($_SESSION['username'])){
+    echo '<h3>É preciso estar logado para acessar essa página!</h3>';
+    die();
+}
+
 $conn = new mysqli(HOST, USER, PASS, BASE);
 
 if ($conn->connect_errno) {
@@ -54,7 +59,6 @@ if ($conn->connect_errno) {
 <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script>
     $(document).ready( () => {
-        console.log('inicio da page');
         toastr.success('<label style="background-color:green">Operação executada com sucesso!</label>');
     })
 </script>

@@ -85,19 +85,30 @@ input{
     grid-template: column;
 }
 
+button{
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 20px;
+    font-family: inherit;
+}
+
 .green-btn{
     background-color: green;
     color: white;
     width: 130px;
     margin-bottom: 10px;
-    padding: 10px;
 }
 
 .red-btn{
     background-color: red;
     color: white;
     width: 130px;
-    padding: 10px;
+}
+
+.blue-btn{
+    background-color: blue;
+    color: white;
+    width: 130px;
 }
 
 .delete-table-btn{
@@ -114,4 +125,8 @@ input{
     border-radius: 5px;
     background-color: green;
     padding: 1px;
+}
+
+.btn-holder{
+    margin-top: 10px;
 }

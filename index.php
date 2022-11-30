@@ -1,4 +1,11 @@
 <?php
+session_start();
+
+if(isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > 1200){
+    session_unset();
+    session_destroy();
+}
+
 define("HOST", "localhost");
 define("USER", "root");
 define("PASS", "");
@@ -44,6 +51,21 @@ if ($conn->connect_errno) {
                 <li>
                     <a href="?page=add">Adicionar</a>
                 </li>
+                <?php if (isset($_SESSION['username'])) {
+                ?>
+                    <li>
+                        <a href="<?php echo '?page=edit&id=' . $_SESSION['id'] ?> ">
+                            <?php echo $_SESSION['username'] ?>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="?page=logout">
+                            Logout
+                        </a>
+                    </li>
+                <?php
+                }
+                ?>
             </ul>
         </div>
     </header>
@@ -63,34 +85,44 @@ if ($conn->connect_errno) {
         case "delete":
             include "delete.php";
             break;
+        case "logout":
+            session_unset();
+            session_destroy();
+            echo "<script>window.location.replace('index.php')</script>";
+            break;
         default:
+            if (!isset($_SESSION['username'])) {
+                include "login.php";
+            } else {
     ?>
-            <main>
-                <h1>Lista de Usuários</h1>
-                <div class="main-content">
-                    <table>
-                        <thead>
-                            <tr>
-                                <td>Nome</td>
-                                <td>Sobrenome</td>
-                                <td>Email</td>
-                                <td>Registro</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($data as $userData) { ?>
+                <main>
+                    <h1>Lista de Usuários</h1>
+                    <div class="main-content">
+                        <table>
+                            <thead>
                                 <tr>
-                                    <td><?php echo $userData[1]; ?></td>
-                                    <td><?php echo $userData[2]; ?></td>
-                                    <td><?php echo $userData[3]; ?></td>
-                                    <td><?php echo $userData[5]; ?></td>
+                                    <td>Nome</td>
+                                    <td>Sobrenome</td>
+                                    <td>Email</td>
+                                    <td>Registro</td>
                                 </tr>
-                            <?php } ?>
-                        </tbody>
-                    </table>
-                </div>
-            </main>
-    <?php break;
+                            </thead>
+                            <tbody>
+                                <?php foreach ($data as $userData) { ?>
+                                    <tr>
+                                        <td><?php echo $userData[1]; ?></td>
+                                        <td><?php echo $userData[2]; ?></td>
+                                        <td><?php echo $userData[3]; ?></td>
+                                        <td><?php echo $userData[5]; ?></td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </main>
+    <?php
+            }
+            break;
     } ?>
 </body>
 
